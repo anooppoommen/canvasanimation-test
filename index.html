@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>welcome canvas test</title>
+	<style type="text/css">
+		*{
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+
+	<canvas id="myCanvas"></canvas>
+	<script type="text/javascript">
+		
+		var c = document.getElementById("myCanvas");
+		c.height = window.innerHeight ;
+		c.width  = window.innerWidth;
+		var ctx = c.getContext("2d");
+		ctx.lineJoin="round";
+		ctx.lineCap = 'round'
+		var changeDir = false;
+		var alphaX = 450,alphaY = 450,alphaY2 = 450;;
+		var dy = 450;
+		var dx = 450
+		theta = 90;
+	var pointArr = [];
+	var pointArr2 = [];
+	var point = function(x,y){
+		this.x = x;
+		this.y =y;
+		this.type = 'l';
+	}
+	function render(){
+		
+		// if(pointArr.length > 100){
+		// 	pointArr = pointArr.slice(2);
+		// }
+		ctx.clearRect(0, 0, c.width, c.height);
+
+		ctx.beginPath();
+		for(var i = 0 ;i<pointArr.length;i++){
+			ctx.quadraticCurveTo(pointArr[i].x+1,pointArr[i].y + 1,pointArr[i].x,pointArr[i].y);
+
+			//ctx.lineTo(pointArr[i].x,pointArr[i].y);
+			
+			
+
+		}ctx.stroke();
+
+		ctx.moveTo(pointArr2[0].x,pointArr2[0].y + 20)
+		for(var i = 0 ;i<pointArr2.length;i++){
+			ctx.quadraticCurveTo(pointArr2[i].x+1,(pointArr2[i].y  +1),pointArr2[i].x,pointArr2[i].y);
+			
+			//ctx.lineTo(pointArr[i].x,pointArr[i].y);
+			
+			
+
+		}ctx.stroke();
+		// if(!changeDir){
+		// 	var l =pointArr[pointArr.length - 1];
+		// 	alphaX = l.x;
+		// 	alphaY = l.y;
+		// 	var last = new point(l.x + ((Math.random() /100)),l.y);
+		// 	last.x += 1;
+		// 	last.y += 1;
+		// 	pointArr.push(last);
+		// 	changeDir = (Math.random() * 100) > 95;
+		// }else{
+			dx += 0.5; //alphaX - (Math.sin(theta) * 130);
+			dy = alphaY + (Math.cos(theta) * 80);
+			dy2 = (alphaY2 + (Math.sin(-theta) * 80));  
+			theta += 0.02;
+			var last = new point(dx,dy);
+			var last2 = new point(dx,dy2-70);
+			last.type = 'c'
+			pointArr.push(last);
+			pointArr2.push(last2);
+			if(theta >= 90)
+			 	changeDir = false
+		//}
+		window.requestAnimationFrame(render);
+		
+	}
+
+	function init(){
+		p = new point(450,450);
+		p2 = new point(450,450);
+		pointArr.push(p);
+		pointArr2.push(p2);
+		window.requestAnimationFrame(render);
+
+	}
+	init();
+
+	</script>
+
+</body>
+</html>
