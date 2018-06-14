@@ -34,7 +34,8 @@
 			this.velocity = 0.05;
 			this.dist = randomIntFromRange(50,120)
 			this.lastMouse = {x:params.x,y:params.y}
-			
+			this.orientation = params.orientation;
+
 			var self = this;
 			
 			window.addEventListener('mousemove',function(e){
@@ -47,7 +48,7 @@
 				var lastPoint = {x : this.x, y : this.y}
 				
 				
-				this.x = this.lastMouse.x + Math.cos(this.rad) * this.dist ;
+				this.x = this.lastMouse.x + this.orientation *( Math.cos(this.rad) * this.dist) ;
 				this.y = this.lastMouse.y + Math.sin(this.rad) * this.dist;
 				
 				this.rad += this.velocity;
@@ -74,7 +75,8 @@
 					x : canvas.width/2,
 					y : canvas.height/2,
 					radius : (Math.random() * 2) +1,
-					color: colors[Math.floor(Math.random() * colors.length )]
+					color: colors[Math.floor(Math.random() * colors.length )],
+					orientation: Math.random() > .6 ? 1 : -1
 				});
 				particles.push(p)
 			}
